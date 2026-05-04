@@ -1,8 +1,9 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import pickle
 import joblib
+
+st.set_page_config(page_title="Patient Dashboard", layout="wide")
 
 model = joblib.load("model.pkl")
 
@@ -160,4 +161,5 @@ if patient_id:
     else:
         st.error("Patient ID not found")
 
-
+prediction = model.predict(features)
+st.metric("Predicted HbA1c", round(prediction[0], 2))
