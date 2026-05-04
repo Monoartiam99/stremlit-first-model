@@ -2,9 +2,9 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pickle
+import joblib
 
-with open("model.pkl", "rb") as f:
-    model = pickle.load(f)
+model = joblib.load("model.pkl")
 
 st.title("Hello This is a basic of streamlit by Monojit Nandy")
 
