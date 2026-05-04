@@ -2,10 +2,19 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import joblib
+import os
 
 st.set_page_config(page_title="Patient Dashboard", layout="wide")
 
-model = joblib.load("model.pkl")
+st.write("Files in folder:", os.listdir())
+
+try:
+    model = joblib.load("model.pkl")
+    st.success("Model loaded")
+except Exception as e:
+    st.error(str(e))
+    st.code(traceback.format_exc())
+    
 st.write("Number of features:", model.n_features_in_)
 
 if hasattr(model, "feature_names_in_"):
