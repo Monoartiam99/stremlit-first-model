@@ -6,6 +6,10 @@ import joblib
 st.set_page_config(page_title="Patient Dashboard", layout="wide")
 
 model = joblib.load("model.pkl")
+st.write("Number of features:", model.n_features_in_)
+
+if hasattr(model, "feature_names_in_"):
+    st.write("Feature names:", model.feature_names_in_)
 
 st.title("Hello This is a basic of streamlit by Monojit Nandy")
 
@@ -37,7 +41,6 @@ if file:
     st.dataframe(filteed_data)
 
 
-
 st.sidebar.header("Patient Information")
 
 hba1c_start = st.sidebar.slider(
@@ -55,29 +58,30 @@ novodra_used = st.sidebar.selectbox(
     [0, 1]
 )
 
-auralin_effect = hba1c_start * auralin_used
-novodra_effect = hba1c_start * novodra_used
 
-if auralin_used == 1 and novodra_used == 0:
-    treatment_type = 1
-elif auralin_used == 0 and novodra_used == 1:
-    treatment_type = 2
-elif auralin_used == 1 and novodra_used == 1:
-    treatment_type = 3
-else:
-    treatment_type = 0
+# auralin_effect = hba1c_start * auralin_used
+# novodra_effect = hba1c_start * novodra_used
 
-hba1c_start_sq = hba1c_start ** 2
+# if auralin_used == 1 and novodra_used == 0:
+#     treatment_type = 1
+# elif auralin_used == 0 and novodra_used == 1:
+#     treatment_type = 2
+# elif auralin_used == 1 and novodra_used == 1:
+#     treatment_type = 3
+# else:
+#     treatment_type = 0
 
-features = np.array([[
-    hba1c_start,
-    hba1c_start_sq,
-    auralin_used,
-    novodra_used,
-    auralin_effect,
-    novodra_effect,
-    treatment_type
-]])
+# hba1c_start_sq = hba1c_start ** 2
+
+# features = np.array([[
+#     hba1c_start,
+#     hba1c_start_sq,
+#     auralin_used,
+#     novodra_used,
+#     auralin_effect,
+#     novodra_effect,
+#     treatment_type
+# ]])
 col1, col2, col3 = st.columns(3)
 
 col1.metric("Starting HbA1c", round(hba1c_start, 2))
@@ -161,5 +165,4 @@ if patient_id:
     else:
         st.error("Patient ID not found")
 
-prediction = model.predict(features)
-st.metric("Predicted HbA1c", round(prediction[0], 2))
+
