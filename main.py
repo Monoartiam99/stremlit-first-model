@@ -4,6 +4,7 @@ import numpy as np
 import joblib
 import os
 import traceback
+model = joblib.load("model.pkl")
 
 st.set_page_config(page_title="Patient Dashboard", layout="wide")
 
