@@ -3,7 +3,6 @@ import pandas as pd
 import numpy as np
 import joblib
 import traceback
-from sklearn.ensemble import RandomForestRegressor
 
 try:
     model = joblib.load("model.pkl")
