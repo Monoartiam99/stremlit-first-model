@@ -2,13 +2,8 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import joblib
-import os
 import traceback
-model = joblib.load("model.pkl")
-
-st.set_page_config(page_title="Patient Dashboard", layout="wide")
-
-st.write("Files in folder:", os.listdir())
+from sklearn.ensemble import RandomForestRegressor
 
 try:
     model = joblib.load("model.pkl")
@@ -16,15 +11,20 @@ try:
 except Exception as e:
     st.error(str(e))
     st.code(traceback.format_exc())
-    
-st.write("Number of features:", model.n_features_in_)
+    model = None
 
+if model:
+    st.write("Number of features:", model.n_features_in_)
+page = st.sidebar.radio(
+    "Menu",
+    ["Home", "CSV Dashboard", "BMI", "Patient Dashboard"]
+)
 if hasattr(model, "feature_names_in_"):
     st.write("Feature names:", model.feature_names_in_)
 
 st.title("Hello This is a basic of streamlit by Monojit Nandy")
 
-#st.subheader("Brewed with steamlit")
+# st.subheader
 st.text("Welcome to your fist interative app")
 st.write("Choose your fav. Variety of language:")
 
@@ -32,7 +32,7 @@ programming=st.selectbox("Your Fav pogramming language: ",["JAVA","C/C++","JAVAS
 st.write(f"You fav programming language is {programming}. Excellent choice")
 st.success("Your programming language has been choose")
 
-#csv file input
+# csv file input
 st.title("Chai sales Dashboard")
 file = st.file_uploader("Upload you csv file", type=["csv"])
 
@@ -50,7 +50,6 @@ if file:
     selected_city = st.selectbox("Filter by cities", cities)
     filteed_data = df[df["city"] == selected_city]
     st.dataframe(filteed_data)
-
 
 st.sidebar.header("Patient Information")
 
@@ -93,6 +92,7 @@ novodra_used = st.sidebar.selectbox(
 #     novodra_effect,
 #     treatment_type
 # ]])
+
 col1, col2, col3 = st.columns(3)
 
 col1.metric("Starting HbA1c", round(hba1c_start, 2))
@@ -120,6 +120,7 @@ weight = st.slider(
 )
 
 # BMI formula
+
 bmi = weight / ((height/100) ** 2)
 
 st.metric("BMI", round(bmi, 2))
