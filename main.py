@@ -6,7 +6,7 @@ import traceback
 
 
 try:
-    model = joblib.load("model.pkl")
+    model = joblib.dumb("model.pkl")
     st.success("Model loaded")
 except Exception as e:
     st.error(str(e))
