@@ -4,6 +4,7 @@ import numpy as np
 import joblib
 import traceback
 
+
 try:
     model = joblib.load("model.pkl")
     st.success("Model loaded")
@@ -18,8 +19,6 @@ page = st.sidebar.radio(
     "Menu",
     ["Home", "CSV Dashboard", "BMI", "Patient Dashboard"]
 )
-if hasattr(model, "feature_names_in_"):
-    st.write("Feature names:", model.feature_names_in_)
 
 st.title("Hello This is a basic of streamlit by Monojit Nandy")
 
